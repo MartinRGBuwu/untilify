@@ -66,32 +66,82 @@
     </p>
   </main>
 
-  <script>
-    // === EDIT ONLY THIS DATE/TIME FOR NOW ===
-    // Use your local time zone; format: YYYY-MM-DDTHH:MM:SS
-    const targetISO = "2025-06-01T20:00:00"; // example target
+<script>
+  // --- Short ID routing using the hash:  http://.../#/uclfinal ---
+  // Later we can switch to clean URLs (/uclfinal) with a Pages fallback.
+  const DEFAULT_ID = 'uclfinal'; // which one to show if no hash
 
-    const eventDate = new Date(targetISO);
-    document.getElementById('eventDateText').textContent =
-      `Target: ${eventDate.toLocaleString()}`;
+  function getIdFromHash() {
+    // Expect "#/something"
+    const h = location.hash || '';
+    const parts = h.replace(/^#\/?/, '').split('/');
+    const id = (parts[0] || '').trim();
+    return id || DEFAULT_ID;
+  }
 
-    function update() {
-      const now = new Date();
-      let diff = Math.max(0, eventDate - now); // ms remaining, never negative
+  // Simple helper to parse "YYYY-MM-DDTHH:MM[:SS]" as local time
+  function parseLocalish(isoLike) {
+    if (!isoLike) return null;
+    const normalized = isoLike.replace(' ', 'T');
+    const d = new Date(normalized);
+    return isNaN(d) ? null : d;
+  }
 
-      const sec = Math.floor(diff / 1000) % 60;
-      const min = Math.floor(diff / (1000*60)) % 60;
-      const hr  = Math.floor(diff / (1000*60*60)) % 24;
-      const day = Math.floor(diff / (1000*60*60*24));
+  let eventDate = null;
+  let timerHandle = null;
 
-      document.getElementById('d').textContent = day;
-      document.getElementById('h').textContent = hr.toString().padStart(2,'0');
-      document.getElementById('m').textContent = min.toString().padStart(2,'0');
-      document.getElementById('s').textContent = sec.toString().padStart(2,'0');
+  async function loadAndRender(id) {
+    // Load our static "database"
+    const res = await fetch('data.json', { cache: 'no-store' });
+    const data = await res.json();
+
+    const evt = data[id];
+    if (!evt) {
+      document.getElementById('eventName').textContent = 'Event not found';
+      document.getElementById('eventDateText').textContent = 'Check the ID in the URL (e.g. #/uclfinal)';
+      eventDate = null;
+      if (timerHandle) clearInterval(timerHandle);
+      ['d','h','m','s'].forEach(k => document.getElementById(k).textContent = '00');
+      return;
     }
 
+    // Set name + date
+    document.getElementById('eventName').textContent = evt.name || id;
+    eventDate = parseLocalish(evt.at);
+    if (!eventDate) {
+      document.getElementById('eventDateText').textContent = 'Invalid date in data.json';
+    } else {
+      document.getElementById('eventDateText').textContent = `Target: ${eventDate.toLocaleString()}`;
+    }
+
+    // Start / restart the ticker
+    if (timerHandle) clearInterval(timerHandle);
     update();
-    setInterval(update, 1000);
-  </script>
+    timerHandle = setInterval(update, 1000);
+  }
+
+  function update() {
+    if (!eventDate) return;
+    const now = new Date();
+    let diff = Math.max(0, eventDate - now);
+
+    const sec = Math.floor(diff / 1000) % 60;
+    const min = Math.floor(diff / (1000*60)) % 60;
+    const hr  = Math.floor(diff / (1000*60*60)) % 24;
+    const day = Math.floor(diff / (1000*60*60*24));
+
+    document.getElementById('d').textContent = day;
+    document.getElementById('h').textContent = hr.toString().padStart(2,'0');
+    document.getElementById('m').textContent = min.toString().padStart(2,'0');
+    document.getElementById('s').textContent = sec.toString().padStart(2,'0');
+  }
+
+  // Handle navigation like #/uclfinal
+  window.addEventListener('hashchange', () => loadAndRender(getIdFromHash()));
+
+  // Initial load
+  loadAndRender(getIdFromHash());
+</script>
+
 </body>
 </html>
