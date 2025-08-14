@@ -1,12 +1,14 @@
 <!doctype html>
 <html lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <link rel="stylesheet" href="style.css">
   <title>Untilify — Time Until Anything</title>
- 
+
 </head>
+
 <body>
   <main class="card">
     <div class="brand">
@@ -19,19 +21,30 @@
     <div class="small" id="eventDateText"></div>
 
     <section class="timer" aria-live="polite" aria-atomic="true">
-      <div class="unit"><div class="num" id="d">0</div><div class="lbl">Days</div></div>
-      <div class="unit"><div class="num" id="h">0</div><div class="lbl">Hours</div></div>
-      <div class="unit"><div class="num" id="m">0</div><div class="lbl">Minutes</div></div>
-      <div class="unit"><div class="num" id="s">0</div><div class="lbl">Seconds</div></div>
+      <div class="unit">
+        <div class="num" id="d">0</div>
+        <div class="lbl">Days</div>
+      </div>
+      <div class="unit">
+        <div class="num" id="h">0</div>
+        <div class="lbl">Hours</div>
+      </div>
+      <div class="unit">
+        <div class="num" id="m">0</div>
+        <div class="lbl">Minutes</div>
+      </div>
+      <div class="unit">
+        <div class="num" id="s">0</div>
+        <div class="lbl">Seconds</div>
+      </div>
     </section>
     <div id="status" class="status" aria-live="polite"></div>
 
-    <p class="small" style="margin-top:14px;">
-      Tip: we’ll add search and user-created events next. For now this is a single hardcoded countdown.
-    </p>
+
   </main>
 
-<script src="app.js" defer></script>
+  <script src="app.js" defer></script>
 
 </body>
+
 </html>

@@ -3,23 +3,29 @@
 <title>Untilify — Redirecting…</title>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <style>
-  body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-         display: grid; place-items: center; min-height: 100vh; color: #1F2937; }
+    body {
+        font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+        display: grid;
+        place-items: center;
+        min-height: 100vh;
+        color: #1F2937;
+    }
 </style>
 <script>
-  // This makes clean paths like /untilify/uclfinal work on GitHub Pages.
-  // It grabs the path segment(s) after the repo name and converts it to a hash: #/uclfinal
-  (function() {
-    const parts = location.pathname.split('/').filter(Boolean);
-    // For project pages, parts[0] is the repo name (e.g., "untilify")
-    const repo = parts[0] || '';
-    const rest = parts.slice(1);            // everything after the repo
-    const idPath = rest.join('/');          // supports /id or /id/sub
-    const base = `${location.origin}/${repo}/`;
-    const dest = `${base}#/${encodeURIComponent(idPath)}` + location.search + location.hash;
-    location.replace(dest);
-  })();
+    // This makes clean paths like /untilify/uclfinal work on GitHub Pages.
+    // It grabs the path segment(s) after the repo name and converts it to a hash: #/uclfinal
+    (function () {
+        const parts = location.pathname.split('/').filter(Boolean);
+        // For project pages, parts[0] is the repo name (e.g., "untilify")
+        const repo = parts[0] || '';
+        const rest = parts.slice(1);            // everything after the repo
+        const idPath = rest.join('/');          // supports /id or /id/sub
+        const base = `${location.origin}/${repo}/`;
+        const dest = `${base}#/${encodeURIComponent(idPath)}` + location.search + location.hash;
+        location.replace(dest);
+    })();
 </script>
+
 <body>
-  Redirecting…
+    Redirecting…
 </body>

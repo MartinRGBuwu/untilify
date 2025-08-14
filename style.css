@@ -1,44 +1,144 @@
-
-    :root {
-      --blue: #2563EB;
-      --orange: #F97316;
-      --text: #1F2937;
-      --bg: #F9FAFB;
-    }
-    * { box-sizing: border-box; }
-    body {
-      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
-      color: var(--text); background: var(--bg);
-      display: grid; place-items: center; min-height: 100svh; padding: 24px;
-    }
-    .card {
-      background: white; width: min(720px, 100%); border-radius: 16px; padding: 28px;
-      box-shadow: 0 10px 24px rgba(0,0,0,.06);
-    }
-    .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
-    .logo {
-      width: 34px; height: 34px; border-radius: 8px; background: var(--orange);
-      /* minimalist hourglass using CSS clip-path */
-      clip-path: polygon(0% 0%, 100% 0%, 70% 50%, 100% 100%, 0% 100%, 30% 50%);
-    }
-    h1 { margin: 0; font-size: 28px; }
-    .tagline { color: #4B5563; margin: 2px 0 16px; }
-    .timer {
-      display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-top: 10px;
-    }
-    .unit {
-      background: #F3F4F6; border-radius: 12px; padding: 16px; text-align: center;
-    }
-    .num { font-size: 28px; font-weight: 700; color: var(--blue); }
-    .lbl { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: #6B7280; }
-    .event {
-      margin-top: 14px; font-weight: 600;
-    }
-    .small { font-size: 12px; color: #6B7280; }
-    .status {
-  margin-top: 10px;
-  font-size: 14px;
-  color: #374151;
+:root {
+    --blue: #60A5FA;
+    /* lighter blue for dark bg */
+    --orange: #F97316;
+    /* brand accent */
+    --text: #E5E7EB;
+    /* light text */
+    --muted: #9CA3AF;
+    /* secondary text */
+    --bg: #0B1220;
+    /* page background */
+    --panel: #0F172A;
+    /* cards/panels */
+    --panel-2: #111827;
+    /* slightly different dark for contrast */
+    --border: #1F2937;
+    /* subtle borders */
 }
-.status--warn { color: #B45309; }   /* amber-ish for warnings */
-.status--err  { color: #B91C1C; }   /* red for errors */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+    color: var(--text);
+    background: var(--bg);
+    display: grid;
+    place-items: center;
+    min-height: 100svh;
+    padding: 24px;
+}
+
+.card {
+    background: var(--panel);
+    width: min(720px, 100%);
+    border-radius: 16px;
+    padding: 28px;
+    /* softer dark shadow */
+    box-shadow: 0 10px 24px rgba(0, 0, 0, .35);
+    border: 1px solid var(--border);
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 10px;
+}
+.logo {
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  background: var(--orange);
+  clip-path: polygon(0% 0%, 100% 0%, 65% 50%, 100% 100%, 0% 100%, 35% 50%);
+}
+
+
+
+
+
+h1 {
+    margin: 0;
+    font-size: 28px;
+}
+
+.tagline {
+    color: var(--muted);
+}
+
+.timer {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    /* <-- put the 4 columns back */
+    gap: 10px;
+    margin-top: 10px;
+}
+
+
+.unit {
+    background: var(--panel-2);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    text-align: center;
+    transition: transform 0.15s ease, background-color 0.15s ease;
+}
+
+.unit:hover {
+  background: rgba(255, 255, 255, 0.08); /* lighter panel */
+  transform: translateY(-4px);
+}
+
+.unit:hover .num {
+  color: #93C5FD; /* lighter blue to pop on hover */
+}
+
+
+.num {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--blue);
+}
+
+.lbl {
+    font-size: 12px;
+    letter-spacing: .04em;
+    text-transform: uppercase;
+    color: var(--muted);
+}
+
+.event {
+    margin-top: 14px;
+    font-weight: 600;
+}
+
+.small {
+    font-size: 12px;
+    color: var(--muted);
+}
+
+.status {
+    margin-top: 10px;
+    font-size: 14px;
+    color: var(--muted);
+}
+
+.status--warn {
+    color: #F59E0B;
+}
+
+/* amber for dark */
+.status--err {
+    color: #F87171;
+}
+
+/* soft red for dark */
+
+@media (max-width: 380px) {
+    .timer {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
