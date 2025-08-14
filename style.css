@@ -1,0 +1,44 @@
+
+    :root {
+      --blue: #2563EB;
+      --orange: #F97316;
+      --text: #1F2937;
+      --bg: #F9FAFB;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      color: var(--text); background: var(--bg);
+      display: grid; place-items: center; min-height: 100svh; padding: 24px;
+    }
+    .card {
+      background: white; width: min(720px, 100%); border-radius: 16px; padding: 28px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    }
+    .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+    .logo {
+      width: 34px; height: 34px; border-radius: 8px; background: var(--orange);
+      /* minimalist hourglass using CSS clip-path */
+      clip-path: polygon(0% 0%, 100% 0%, 70% 50%, 100% 100%, 0% 100%, 30% 50%);
+    }
+    h1 { margin: 0; font-size: 28px; }
+    .tagline { color: #4B5563; margin: 2px 0 16px; }
+    .timer {
+      display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-top: 10px;
+    }
+    .unit {
+      background: #F3F4F6; border-radius: 12px; padding: 16px; text-align: center;
+    }
+    .num { font-size: 28px; font-weight: 700; color: var(--blue); }
+    .lbl { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: #6B7280; }
+    .event {
+      margin-top: 14px; font-weight: 600;
+    }
+    .small { font-size: 12px; color: #6B7280; }
+    .status {
+  margin-top: 10px;
+  font-size: 14px;
+  color: #374151;
+}
+.status--warn { color: #B45309; }   /* amber-ish for warnings */
+.status--err  { color: #B91C1C; }   /* red for errors */
