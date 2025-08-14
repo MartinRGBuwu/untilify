@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Untilify — Time Until Anything</title>
+  <style>
+    :root {
+      --blue: #2563EB;
+      --orange: #F97316;
+      --text: #1F2937;
+      --bg: #F9FAFB;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Inter, Arial, sans-serif;
+      color: var(--text); background: var(--bg);
+      display: grid; place-items: center; min-height: 100svh; padding: 24px;
+    }
+    .card {
+      background: white; width: min(720px, 100%); border-radius: 16px; padding: 28px;
+      box-shadow: 0 10px 24px rgba(0,0,0,.06);
+    }
+    .brand { display: flex; align-items: center; gap: 14px; margin-bottom: 10px; }
+    .logo {
+      width: 34px; height: 34px; border-radius: 8px; background: var(--orange);
+      /* minimalist hourglass using CSS clip-path */
+      clip-path: polygon(0% 0%, 100% 0%, 70% 50%, 100% 100%, 0% 100%, 30% 50%);
+    }
+    h1 { margin: 0; font-size: 28px; }
+    .tagline { color: #4B5563; margin: 2px 0 16px; }
+    .timer {
+      display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; margin-top: 10px;
+    }
+    .unit {
+      background: #F3F4F6; border-radius: 12px; padding: 16px; text-align: center;
+    }
+    .num { font-size: 28px; font-weight: 700; color: var(--blue); }
+    .lbl { font-size: 12px; letter-spacing: .04em; text-transform: uppercase; color: #6B7280; }
+    .event {
+      margin-top: 14px; font-weight: 600;
+    }
+    .small { font-size: 12px; color: #6B7280; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <div class="brand">
+      <div class="logo" aria-hidden="true"></div>
+      <h1>Untilify</h1>
+    </div>
+    <div class="tagline">Time Until Anything</div>
+
+    <div id="eventName" class="event">Sample: UEFA Champions League Final</div>
+    <div class="small" id="eventDateText"></div>
+
+    <section class="timer" aria-live="polite" aria-atomic="true">
+      <div class="unit"><div class="num" id="d">0</div><div class="lbl">Days</div></div>
+      <div class="unit"><div class="num" id="h">0</div><div class="lbl">Hours</div></div>
+      <div class="unit"><div class="num" id="m">0</div><div class="lbl">Minutes</div></div>
+      <div class="unit"><div class="num" id="s">0</div><div class="lbl">Seconds</div></div>
+    </section>
+
+    <p class="small" style="margin-top:14px;">
+      Tip: we’ll add search and user-created events next. For now this is a single hardcoded countdown.
+    </p>
+  </main>
+
+  <script>
+    // === EDIT ONLY THIS DATE/TIME FOR NOW ===
+    // Use your local time zone; format: YYYY-MM-DDTHH:MM:SS
+    const targetISO = "2025-06-01T20:00:00"; // example target
+
+    const eventDate = new Date(targetISO);
+    document.getElementById('eventDateText').textContent =
+      `Target: ${eventDate.toLocaleString()}`;
+
+    function update() {
+      const now = new Date();
+      let diff = Math.max(0, eventDate - now); // ms remaining, never negative
+
+      const sec = Math.floor(diff / 1000) % 60;
+      const min = Math.floor(diff / (1000*60)) % 60;
+      const hr  = Math.floor(diff / (1000*60*60)) % 24;
+      const day = Math.floor(diff / (1000*60*60*24));
+
+      document.getElementById('d').textContent = day;
+      document.getElementById('h').textContent = hr.toString().padStart(2,'0');
+      document.getElementById('m').textContent = min.toString().padStart(2,'0');
+      document.getElementById('s').textContent = sec.toString().padStart(2,'0');
+    }
+
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
+</html>
